@@ -4,6 +4,7 @@ import Jobs from "./Jobs";
 
 const FeaturedJobs = () => {
      const [jobs, setJobs]= useState([]);
+     const [isShow, setIsShow] = useState(false)
      useEffect(()=>{
           fetch('jobs.json')
           .then(res=> res.json())
@@ -17,12 +18,12 @@ const FeaturedJobs = () => {
                      with all the information you need. Its your future</p>
                <div className="grid grid-cols-2 gap-5 mt-7">
                     {
-                         jobs.map(job=><Jobs key={job.id} job={job}></Jobs>)
+                         isShow? jobs.map(job=><Jobs key={job.id} job={job}></Jobs>) : jobs.slice(0,4).map(job=><Jobs key={job.id} job={job}></Jobs>)
                     }
 
                </div>
                <div className="flex justify-center mt-5">
-               <button className="btn text-white bg-gradient-to-r from-[#7E90FE] to-[#9873FF]">See All Jobs</button>
+               <button onClick={()=>setIsShow(!isShow)} className="btn text-white bg-gradient-to-r from-[#7E90FE] to-[#9873FF]">{isShow? 'See Less Jobs' : 'See All Jobs'}</button>
                </div>
                </div>
           </div>
